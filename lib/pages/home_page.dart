@@ -46,25 +46,23 @@ class HomePage extends StatelessWidget {
                     );
                   }),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 20),
+            const SizedBox(height: 20,),
+            SizedBox(
               width: size.width * 0.8,
               height: size.height * 0.05,
-              color: Colors.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Icon(
-                    FontAwesomeIcons.plus,
-                    color: Colors.white,
-                    size: 15,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    "Add new card",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
-                  )
-                ],
+              child: TextButton.icon(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                  elevation: MaterialStateProperty.all(0),
+                  overlayColor: MaterialStateProperty.all(Colors.white.withAlpha(10))
+                ),
+                onPressed: () => {},
+                label: const Text('Add new Card', style: TextStyle(fontSize: 15, color: Colors.white),),
+                icon: const Icon(
+                  FontAwesomeIcons.plus,
+                  color: Colors.white,
+                  size: 15,
+                )
               ),
             ),
             Container(
