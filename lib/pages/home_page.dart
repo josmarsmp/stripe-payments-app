@@ -1,12 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stripe_app/data/credit_cards.dart';
+import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/models/creadit_card_model.dart';
+import 'package:stripe_app/pages/credit_card.dart';
 
-import '../widgets/delivery_information.dart';
+import '../widgets/home/delivery_information.dart';
+import '../widgets/home/resume_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -33,21 +34,30 @@ class HomePage extends StatelessWidget {
               height: size.height * 0.25,
               child: PageView.builder(
                   controller: PageController(
-                    viewportFraction: 0.90,
+                    viewportFraction: 0.85,
                   ),
                   physics: const BouncingScrollPhysics(),
                   itemCount: creditCards.length,
                   itemBuilder: (_, i) {
-                    final CreditCardModelCustom creaditCard = creditCards[i];
-                    return CreditCardWidget(
-                      cardNumber: creaditCard.cardNumber,
-                      expiryDate: creaditCard.expiracyDate,
-                      cardHolderName: creaditCard.cardHolderName,
-                      isHolderNameVisible: true,
-                      cvvCode: creaditCard.cvv,
-                      showBackView: false,
-                      onCreditCardWidgetChange: (_) {},
-                      cardBgColor: Colors.black,
+                    final CreditCardModelCustom creditCard = creditCards[i];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            fadeInNavigation(context, const CreditCardPage()));
+                      },
+                      child: Hero(
+                        tag: creditCard.cardNumber,
+                        child: CreditCardWidget(
+                          cardNumber: creditCard.cardNumber,
+                          expiryDate: creditCard.expiracyDate,
+                          cardHolderName: creditCard.cardHolderName,
+                          isHolderNameVisible: true,
+                          cvvCode: creditCard.cvv,
+                          showBackView: false,
+                          onCreditCardWidgetChange: (_) {},
+                          cardBgColor: Colors.black,
+                        ),
+                      ),
                     );
                   }),
             ),
@@ -76,70 +86,8 @@ class HomePage extends StatelessWidget {
             ),
             const DeliveryInformation(),
             const Spacer(),
-            Container(
-              width: size.width,
-              height: size.height * 0.15,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: const BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))
-                      ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const <Widget>[
-                      Text(
-                        'Total: 3 items',
-                        style: TextStyle(fontSize: 15, color: Colors.white),
-                      ),
-                      Text(
-                        '\$115.28',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            height: 1.5),
-                      )
-                    ],
-                  ),
-                  const BtnPay()
-                ],
-              ),
-            )
+            const Resume()
           ],
         ));
-  }
-}
-
-class BtnPay extends StatelessWidget {
-  const BtnPay({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
-    return SizedBox(
-      width: size.width * 0.5,
-      child: TextButton.icon(
-          onPressed: () => {},
-          icon: Icon(
-            Platform.isIOS 
-            ? FontAwesomeIcons.apple
-            : FontAwesomeIcons.google
-          ),
-          style: TextButton.styleFrom(
-            elevation: 0,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            textStyle: const TextStyle(color: Colors.black)
-          ),
-          label: const Text('Pay now')),
-    );
   }
 }
