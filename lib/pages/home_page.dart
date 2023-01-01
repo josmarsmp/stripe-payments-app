@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stripe_app/data/credit_cards.dart';
 import 'package:stripe_app/models/creadit_card_model.dart';
 
-import '../widgets/information_label.dart';
+import '../widgets/delivery_information.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,6 +14,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final double buttonHeight = size.height * 0.05;
+    final double buttonWidth = size.width * 0.8;
 
     return Scaffold(
         appBar: AppBar(title: const Text('Payment Method'), actions: <Widget>[
@@ -39,6 +43,7 @@ class HomePage extends StatelessWidget {
                       cardNumber: creaditCard.cardNumber,
                       expiryDate: creaditCard.expiracyDate,
                       cardHolderName: creaditCard.cardHolderName,
+                      isHolderNameVisible: true,
                       cvvCode: creaditCard.cvv,
                       showBackView: false,
                       onCreditCardWidgetChange: (_) {},
@@ -46,70 +51,64 @@ class HomePage extends StatelessWidget {
                     );
                   }),
             ),
-            const SizedBox(height: 20,),
-            SizedBox(
-              width: size.width * 0.8,
-              height: size.height * 0.05,
-              child: TextButton.icon(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
-                  elevation: MaterialStateProperty.all(0),
-                  overlayColor: MaterialStateProperty.all(Colors.white.withAlpha(10))
-                ),
-                onPressed: () => {},
-                label: const Text('Add new Card', style: TextStyle(fontSize: 15, color: Colors.white),),
-                icon: const Icon(
-                  FontAwesomeIcons.plus,
-                  color: Colors.white,
-                  size: 15,
-                )
-              ),
+            const SizedBox(
+              height: 20,
             ),
+            SizedBox(
+              width: buttonWidth,
+              height: buttonHeight,
+              child: TextButton.icon(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      elevation: MaterialStateProperty.all(0),
+                      overlayColor: MaterialStateProperty.all(
+                          Colors.white.withAlpha(10))),
+                  onPressed: () => {},
+                  label: const Text(
+                    'Add new Card',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  icon: const Icon(
+                    FontAwesomeIcons.plus,
+                    color: Colors.white,
+                    size: 15,
+                  )),
+            ),
+            const DeliveryInformation(),
+            const Spacer(),
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
-              width: size.width * 0.90,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              width: size.width,
+              height: size.height * 0.15,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: const BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))
+                      ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Delivery Information',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w700)),
-                  const Divider(
-                    color: Colors.black54,
-                    height: 20.0,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const <Widget>[
+                      Text(
+                        'Total: 3 items',
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                      Text(
+                        '\$115.28',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            height: 1.5),
+                      )
+                    ],
                   ),
-                  InformationLabel(
-                    icon: FontAwesomeIcons.locationDot,
-                    label: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const <Widget>[
-                        Text(
-                          "1569 Cordell Rd",
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          "Bowman, Georgia(GA), 30624",
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  const InformationLabel(
-                    icon: FontAwesomeIcons.truck,
-                    label: Text(
-                          "Wednesday, 12 July 2022 at 3:30 PM",
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                  ),
-                  const SizedBox(height: 10,),
-                  const InformationLabel(
-                    icon: FontAwesomeIcons.phone,
-                    label: Text(
-                          "+12 345 6789",
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                  ),
+                  const BtnPay()
                 ],
               ),
             )
@@ -118,3 +117,29 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class BtnPay extends StatelessWidget {
+  const BtnPay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
+    return SizedBox(
+      width: size.width * 0.5,
+      child: TextButton.icon(
+          onPressed: () => {},
+          icon: Icon(
+            Platform.isIOS 
+            ? FontAwesomeIcons.apple
+            : FontAwesomeIcons.google
+          ),
+          style: TextButton.styleFrom(
+            elevation: 0,
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            textStyle: const TextStyle(color: Colors.black)
+          ),
+          label: const Text('Pay now')),
+    );
+  }
+}

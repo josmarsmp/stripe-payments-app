@@ -7,7 +7,7 @@ final List<CreditCardModelCustom> creditCards = <CreditCardModelCustom>[
       brand: 'visa',
       cvv: '213',
       expiracyDate: '01/25',
-      cardHolderName: 'Fernando Herrera'
+      cardHolderName: 'Josmar Salvador'
     ),
     CreditCardModelCustom(
       cardNumberHidden: '5555',
