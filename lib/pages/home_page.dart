@@ -73,7 +73,12 @@ class HomePage extends StatelessWidget {
                       elevation: MaterialStateProperty.all(0),
                       overlayColor: MaterialStateProperty.all(
                           Colors.white.withAlpha(10))),
-                  onPressed: () => {},
+                  onPressed: () => showCustomDialog(
+                    context: context,
+                    icon: const Icon(FontAwesomeIcons.faceSmile),
+                    title: 'Todo correcto',
+                    message: 'Tarjeta agregada correctamente'
+                  ),
                   label: const Text(
                     'Add new Card',
                     style: TextStyle(fontSize: 15, color: Colors.white),
