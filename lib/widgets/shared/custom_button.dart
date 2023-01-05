@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:stripe_app/theme/constants.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.backgroundColor, required this.text, required this.textColor, required this.onPressed, required this.icon});
+  const CustomButton({super.key, required this.text, required this.onPressed, this.backgroundColor = stripeAppPrimaryColor, this.textColor = stripeAppSecondaryColor, this.icon});
 
-  final Color backgroundColor;
   final String text;
-  final Color textColor;
   final VoidCallback onPressed;
-  final Icon icon;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
+    return TextButton(
       style: TextButton.styleFrom(
         elevation: 0,
         backgroundColor: backgroundColor,
-        foregroundColor: Colors.black,
-        textStyle: TextStyle(color: textColor)),
-        onPressed: () => {},
-        label: Text(
-          text,
-          style: const TextStyle(fontSize: 15, color: Colors.white),
+        foregroundColor: textColor),
+        onPressed: onPressed,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if( icon != null ) icon!,
+            if( icon != null ) const SizedBox( width: 10),
+            Text(
+              text,
+              style: TextStyle(fontSize: 15, color: textColor),
+            ),
+          ],
         ),
-        icon: icon
       );
   }
 }

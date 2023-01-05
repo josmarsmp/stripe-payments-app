@@ -3,8 +3,10 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stripe_app/data/credit_cards.dart';
 import 'package:stripe_app/helpers/helpers.dart';
-import 'package:stripe_app/models/creadit_card_model.dart';
+import 'package:stripe_app/models/credit_card_model.dart';
 import 'package:stripe_app/pages/credit_card.dart';
+import 'package:stripe_app/theme/constants.dart';
+import 'package:stripe_app/widgets/shared/custom_button.dart';
 
 import '../widgets/home/delivery_information.dart';
 import '../widgets/home/resume_widget.dart';
@@ -14,9 +16,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    final double buttonHeight = size.height * 0.05;
-    final double buttonWidth = size.width * 0.8;
+    final double buttonHeight = getHeightByPercent(context, 5);
+    final double buttonWidth = getWidthByPercent(context, 80);
 
     return Scaffold(
         appBar: AppBar(title: const Text('Payment Method'), actions: <Widget>[
@@ -30,8 +31,8 @@ class HomePage extends StatelessWidget {
         body: Column(
           children: [
             SizedBox(
-              width: size.width,
-              height: size.height * 0.25,
+              width: getWidthByPercent(context, 100),
+              height: getHeightByPercent(context, 25),
               child: PageView.builder(
                   controller: PageController(
                     viewportFraction: 0.85,
@@ -67,27 +68,21 @@ class HomePage extends StatelessWidget {
             SizedBox(
               width: buttonWidth,
               height: buttonHeight,
-              child: TextButton.icon(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      elevation: MaterialStateProperty.all(0),
-                      overlayColor: MaterialStateProperty.all(
-                          Colors.white.withAlpha(10))),
-                  onPressed: () => showCustomDialog(
-                    context: context,
-                    icon: const Icon(FontAwesomeIcons.faceSmile),
-                    title: 'Todo correcto',
-                    message: 'Tarjeta agregada correctamente'
-                  ),
-                  label: const Text(
-                    'Add new Card',
-                    style: TextStyle(fontSize: 15, color: Colors.white),
-                  ),
-                  icon: const Icon(
-                    FontAwesomeIcons.plus,
-                    color: Colors.white,
-                    size: 15,
-                  )),
+              child: CustomButton(
+                text: 'Add new Card',
+                icon: const Icon(
+                  FontAwesomeIcons.plus,
+                  color: Colors.white,
+                  size: 15,
+                ),
+                onPressed: () => showCustomDialog(
+                  context: context,
+                  icon: const Icon(FontAwesomeIcons.faceSmile, size: 40,),
+                  title: 'Todo correcto',
+                  message: 'Tarjeta agregada correctamente',
+                  onButtonPressed: () => Navigator.of(context).pop()
+                ),
+              ),
             ),
             const DeliveryInformation(),
             const Spacer(),

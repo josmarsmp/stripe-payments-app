@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../helpers/helpers.dart';
 import 'custom_pay_button_widget.dart';
 
 class Resume extends StatelessWidget {
@@ -9,11 +10,10 @@ class Resume extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width,
-      height: size.height * 0.15,
+      width: getWidthByPercent(context, 100),
+      height: getHeightByPercent(context, 15),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: const BoxDecoration(
           color: Colors.black,

@@ -1,4 +1,4 @@
-import 'package:stripe_app/models/creadit_card_model.dart';
+import 'package:stripe_app/models/credit_card_model.dart';
 
 final List<CreditCardModelCustom> creditCards = <CreditCardModelCustom>[
     CreditCardModelCustom(

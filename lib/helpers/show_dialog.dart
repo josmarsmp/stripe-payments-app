@@ -1,7 +1,7 @@
 part of 'helpers.dart';
 
-showCustomDialog(
-    {required BuildContext context, required Icon icon, required String title, required String message}) {
+void showCustomDialog(
+    {required BuildContext context, required Icon icon, required String title, required String message, Widget? buttonIcon, required VoidCallback onButtonPressed}) {
   showDialog(
       context: context,
       barrierColor: Colors.black38,
@@ -10,6 +10,8 @@ showCustomDialog(
                 title: title,
                 message: message,
                 icon: icon,
+                buttonIcon: buttonIcon,
+                onButtonPressed: onButtonPressed,
             )
           ));
 }

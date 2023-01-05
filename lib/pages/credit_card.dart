@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 
-import '../models/creadit_card_model.dart';
+import '../models/credit_card_model.dart';
 import '../widgets/home/resume_widget.dart';
 
 class CreditCardPage extends StatelessWidget {
