@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stripe_app/theme/constants.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.text, required this.onPressed, this.backgroundColor = stripeAppPrimaryColor, this.textColor = stripeAppSecondaryColor, this.icon});
+  const CustomButton({super.key, required this.text, required this.onPressed, this.backgroundColor = StripeAppConstants.stripeAppPrimaryColor, this.textColor = StripeAppConstants.stripeAppSecondaryColor, this.icon});
 
   final String text;
   final VoidCallback onPressed;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:stripe_app/bloc/payment/payment_bloc.dart';
 
 import '../models/credit_card_model.dart';
 import '../widgets/home/resume_widget.dart';
@@ -9,6 +11,8 @@ class CreditCardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final PaymentBloc paymentBloc = BlocProvider.of<PaymentBloc>(context);
 
     final CreditCardModelCustom creditCard = CreditCardModelCustom(
       cardNumberHidden: '4242',
@@ -22,6 +26,13 @@ class CreditCardPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout with credit card'),
+        leading: IconButton(
+          onPressed: () {
+            paymentBloc.add(OnDeselectCreditCard());
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.chevron_left),
+        ),
       ),
       body: Column(
         children: <Widget>[

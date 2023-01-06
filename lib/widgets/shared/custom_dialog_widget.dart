@@ -36,9 +36,9 @@ class CustomDialogWidget extends StatelessWidget {
             const SizedBox(height: 20),
             Column(
               children: <Widget>[
-                Text(title, style: stripeAppDialogTitleStyle),
+                Text(title, style: StripeAppConstants.stripeAppDialogTitleStyle),
                 const SizedBox(height: 20),
-                Text(message, style: stripeAppDialogMessageStyle)
+                Text(message, style: StripeAppConstants.stripeAppDialogMessageStyle)
               ],
             ),
             const SizedBox(height: 30),

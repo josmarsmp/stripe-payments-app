@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stripe_app/bloc/payment/payment_bloc.dart';
 import 'package:stripe_app/data/credit_cards.dart';
 import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/models/credit_card_model.dart';
 import 'package:stripe_app/pages/credit_card.dart';
-import 'package:stripe_app/theme/constants.dart';
 import 'package:stripe_app/widgets/shared/custom_button.dart';
 
+import '../theme/constants.dart';
 import '../widgets/home/delivery_information.dart';
 import '../widgets/home/resume_widget.dart';
 
@@ -16,11 +18,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PaymentBloc paymentBloc = BlocProvider.of<PaymentBloc>(context);
+
     final double buttonHeight = getHeightByPercent(context, 5);
     final double buttonWidth = getWidthByPercent(context, 80);
 
     return Scaffold(
-        appBar: AppBar(title: const Text('Payment Method'), actions: <Widget>[
+        appBar: AppBar(title: const Text('Payment Method'),
+        actions: <Widget>[
           IconButton(
               onPressed: () {},
               icon: const Icon(
@@ -43,6 +48,7 @@ class HomePage extends StatelessWidget {
                     final CreditCardModelCustom creditCard = creditCards[i];
                     return InkWell(
                       onTap: () {
+                        paymentBloc.add(OnSelectCreditCard(creditCard));
                         Navigator.push(context,
                             fadeInNavigation(context, const CreditCardPage()));
                       },
@@ -56,7 +62,7 @@ class HomePage extends StatelessWidget {
                           cvvCode: creditCard.cvv,
                           showBackView: false,
                           onCreditCardWidgetChange: (_) {},
-                          cardBgColor: Colors.black,
+                          cardBgColor: StripeAppConstants.stripeAppPrimaryColor,
                         ),
                       ),
                     );
@@ -72,16 +78,18 @@ class HomePage extends StatelessWidget {
                 text: 'Add new Card',
                 icon: const Icon(
                   FontAwesomeIcons.plus,
-                  color: Colors.white,
+                  color: StripeAppConstants.stripeAppSecondaryColor,
                   size: 15,
                 ),
                 onPressed: () => showCustomDialog(
-                  context: context,
-                  icon: const Icon(FontAwesomeIcons.faceSmile, size: 40,),
-                  title: 'Todo correcto',
-                  message: 'Tarjeta agregada correctamente',
-                  onButtonPressed: () => Navigator.of(context).pop()
-                ),
+                    context: context,
+                    icon: const Icon(
+                      FontAwesomeIcons.faceSmile,
+                      size: 40,
+                    ),
+                    title: 'Todo correcto',
+                    message: 'Tarjeta agregada correctamente',
+                    onButtonPressed: () => Navigator.of(context).pop()),
               ),
             ),
             const DeliveryInformation(),

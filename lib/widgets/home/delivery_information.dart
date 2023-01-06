@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../theme/constants.dart';
 import 'information_label.dart';
 
 class DeliveryInformation extends StatelessWidget {
@@ -32,11 +33,11 @@ class DeliveryInformation extends StatelessWidget {
               children: const <Widget>[
                 Text(
                   "1569 Cordell Rd",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  style: StripeAppConstants.stripeAppLabelStyle
                 ),
                 Text(
                   "Bowman, Georgia(GA), 30624",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  style: StripeAppConstants.stripeAppLabelStyle
                 )
               ],
             ),
@@ -48,7 +49,7 @@ class DeliveryInformation extends StatelessWidget {
             icon: FontAwesomeIcons.truck,
             label: Text(
               "Wednesday, 12 July 2022 at 3:30 PM",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: StripeAppConstants.stripeAppLabelStyle
             ),
           ),
           const SizedBox(
@@ -58,7 +59,7 @@ class DeliveryInformation extends StatelessWidget {
             icon: FontAwesomeIcons.phone,
             label: Text(
               "+12 345 6789",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              style: StripeAppConstants.stripeAppLabelStyle
             ),
           ),
         ],
